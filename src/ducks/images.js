@@ -1,11 +1,13 @@
 const SET_PRELOAD       = 'NASA_SET_PRELOAD'
 const SET_LIST          = 'NASA_SET_LIST'
 const SELECT_IMAGE      = 'NASA_SELECT_IMAGE'
+const SET_OFFLINE       = 'NASA_SET_OFFLINE'
 
 const initState = {
     preloading: true,
     list: [],
     image: null,
+    offline: false,
 }
 
 export function reducerImages(state = initState, action) {
@@ -22,6 +24,10 @@ export function reducerImages(state = initState, action) {
 
         case SELECT_IMAGE:
             newState.image = action.image
+            break
+        
+        case SET_OFFLINE:
+            newState.offline = action.offline
             break
     }
 
