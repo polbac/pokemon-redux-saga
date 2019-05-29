@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import clientNasa from "../../client/nasaClient";
 import { setPreload, setList, selectImageId } from "../../ducks/images";
 import { Item } from "../item/Item";
-import Offline from "../offline/Offline";
 import Preloading from "../preloading/Preloading";
 
 class List extends React.Component {
@@ -17,14 +16,13 @@ class List extends React.Component {
   }
 
   render() {
-    const { list, preloading, selectImageId, offline } = this.props;
+    const { list, preloading, selectImageId } = this.props;
     return (
       <section>
         <marquee>
           <h2>DSCOVR's Earth Polychromatic Imaging Camera (EPIC)</h2>
         </marquee>
 
-        {offline && <Offline />}
         {preloading && <Preloading />}
 
         {list.map(imageData => (
@@ -41,7 +39,6 @@ class List extends React.Component {
 const mapStateToProps = store => ({
   list: store.images.list,
   preloading: store.images.preloading,
-  offline: store.images.offline,
 });
 
 const mapDispatchToProps = dispatch => ({

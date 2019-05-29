@@ -64,6 +64,6 @@ export const selectImageData = detailData => ({
 });
 
 export const setOffline = offline => ({
-  type: SET_IMAGE_DATA,
+  type: SET_OFFLINE,
   offline,
 });

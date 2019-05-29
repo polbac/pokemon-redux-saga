@@ -9,15 +9,25 @@ class Offline extends React.Component {
     window.addEventListener("offline", this.updateInternetStatus.bind(this));
   }
   updateInternetStatus(event) {
-    this.props.offline(!navigator.onLine);
+    this.props.setOffline(!navigator.onLine);
   }
   render() {
-    return <div class="offline">:'( no hay conexión</div>;
+    const { offline } = this.props;
+
+    return offline ? (
+      <div class="offline">:'( no hay conexión</div>
+    ) : (
+      <React.Fragment />
+    );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  offline: state => dispatch(setOffline(state)),
+const mapStateToProps = state => ({
+  offline: state.images.offline,
 });
 
-export default connect(null, mapDispatchToProps)(Offline);
+const mapDispatchToProps = dispatch => ({
+  setOffline: state => dispatch(setOffline(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Offline);

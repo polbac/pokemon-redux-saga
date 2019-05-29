@@ -5,6 +5,7 @@ import "./App.css";
 import Detail from "./components/detail/Detail";
 import { Header } from "./components/header/Header";
 import List from "./components/list/List";
+import Offline from "./components/offline/Offline";
 import { store } from "./store/store";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Header />
         <List />
         <Detail />
+        <Offline />
       </main>
     </Provider>
   );
