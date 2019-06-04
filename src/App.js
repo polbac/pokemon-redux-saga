@@ -8,6 +8,8 @@ import List from "./components/list/List";
 import Offline from "./components/offline/Offline";
 import { store } from "./store/store";
 
+import Banner from './assets/banner.gif'
+
 function App() {
   return (
     <Provider store={store}>
@@ -16,6 +18,7 @@ function App() {
         <List />
         <Detail />
         <Offline />
+        <img src={Banner} />
       </main>
     </Provider>
   );

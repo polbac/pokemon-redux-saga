@@ -31,3 +31,10 @@ export const CloseButton = styled.div`
     color: blue;
 `
 
+export const DetailMoves = styled.div`
+    height: 300px;
+    overflow-y: scroll;
+`
+
+
+

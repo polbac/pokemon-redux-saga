@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { API_LIST_URL } from "../../config";
-import { setItemDetail, setList, setPreload } from "../../ducks/images";
+import { setItemDetail, selectItem, setList, setPreload } from "../../ducks/images";
 import { Item } from "../item/Item";
 import Preloading from "../preloading/Preloading";
 
@@ -30,8 +30,8 @@ class List extends React.Component {
   }
 
   render() {
-    const { list, preloading } = this.props;
-    console.log(list);
+    const { list, preloading, selectPokemonIndex } = this.props;
+
     return (
       <section>
         <marquee>
@@ -40,7 +40,8 @@ class List extends React.Component {
 
         {preloading && <Preloading />}
 
-        {list.map(item => <Item onSelect={() => item.identifier} {...item} />)}
+        {list.map((item, index) => 
+          <Item onSelect={() => selectPokemonIndex(index)} {...item} />)}
       </section>
     );
   }
@@ -56,6 +57,7 @@ const mapDispatchToProps = dispatch => ({
   hideSpinner: () => dispatch(setPreload(false)),
   setPokemonList: list => dispatch(setList(list)),
   setPokemonDetail: (id, data) => dispatch(setItemDetail(id, data)),
+  selectPokemonIndex: id => dispatch(selectItem(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

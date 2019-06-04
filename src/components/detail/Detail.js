@@ -1,25 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import nasaClient from "../../client/pokemonClient";
 import Preloading from "../preloading/Preloading";
+import { selectItem } from "../../ducks/images";
 import {
   DetailContainer,
   DetailInfoContainer,
   CloseButton,
+  DetailMoves,
 } from "./DetailStyles";
 
 class Detail extends React.Component {
   componentDidUpdate() {
-    const { detailId, detailData } = this.props;
-    if (detailId !== null && detailData === null) {
-      this.fetchDetail();
-    }
+    console.log('update')
   }
 
-  fetchDetail() {
-    const { detailId, setDetailData } = this.props;
-    nasaClient.getDetail(detailId).then(detail => setDetailData(detail));
-  }
 
   componentDidMount() {
     document.addEventListener("keydown", this.onKeyDown.bind(this));
@@ -38,13 +32,14 @@ class Detail extends React.Component {
   }
 
   render() {
-    const { detailData, detailId, close } = this.props;
+    const { detailId, list, close } = this.props;
 
     if (detailId === null) {
       return <React.Fragment />;
     }
 
-    if (detailData === null) {
+
+    if (detailId === null) {
       return (
         <DetailContainer>
           <Preloading />
@@ -53,36 +48,44 @@ class Detail extends React.Component {
     }
 
     const {
-      identifier,
-      caption,
-      centroid_coordinates,
-      image,
-      date,
-      coords,
-    } = detailData;
+      name,
+      base_experience,
+      sprites,
+      weight,
+      moves,
+      height
+    } = list[detailId];
+
 
     return (
       <DetailContainer>
         <CloseButton onClick={() => close()}>[ CLOSE ]</CloseButton>
         <DetailInfoContainer className="fade-in">
-          <h2>id: {identifier}</h2>
+          <h2>{name}</h2>
+          {Object.keys(sprites).map(key => <img src={sprites[key]} />)}
           <p>
-            [{centroid_coordinates.lat}, {centroid_coordinates.lon}]
+            [experience: {base_experience}]
           </p>
-          <p>{caption}</p>
-        </DetailInfoContainer>
-        <div className="fade-in" />
 
-        {Object.keys(coords).map(property => (
-          <DetailInfoContainer className="fade-in">
-            <h3>{property}</h3>
-            [{Object.keys(coords[property]).map(insideProperty => (
-              <p>
-                {insideProperty}: {coords[property][insideProperty]}
-              </p>
-            ))}]
-          </DetailInfoContainer>
-        ))}
+          <p>
+            [height: {height} / weight: {weight}]
+          </p>
+
+          <p>
+            moves <br />
+            <DetailMoves>
+            {moves.map(move => <code>{move.move.name}<br /></code>)}
+            </DetailMoves>
+          </p>
+
+          
+          
+        </DetailInfoContainer>
+
+        
+
+
+        
       </DetailContainer>
     );
   }
@@ -90,12 +93,11 @@ class Detail extends React.Component {
 
 const mapStateToProps = store => ({
   detailId: store.images.detailId,
-  detailData: store.images.detailData,
+  list: store.images.list,
 });
 
 const mapDispatchToProps = dispatch => ({
-  // close: () => dispatch(selectImageId(null)),
-  // setDetailData: detailData => dispatch(selectImageData(detailData)),
+  close: id => dispatch(selectItem(null)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);
