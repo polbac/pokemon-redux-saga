@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import nasaClient from "../../client/nasaClient";
-import { selectImageId, selectImageData } from "../../ducks/images";
-import { getImage } from "../item/Item";
+import nasaClient from "../../client/pokemonClient";
 import Preloading from "../preloading/Preloading";
 import {
   DetailContainer,
@@ -73,7 +71,7 @@ class Detail extends React.Component {
           </p>
           <p>{caption}</p>
         </DetailInfoContainer>
-        <div className="fade-in">{getImage(image, date, identifier)}</div>
+        <div className="fade-in" />
 
         {Object.keys(coords).map(property => (
           <DetailInfoContainer className="fade-in">
@@ -96,8 +94,8 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  close: () => dispatch(selectImageId(null)),
-  setDetailData: detailData => dispatch(selectImageData(detailData)),
+  // close: () => dispatch(selectImageId(null)),
+  // setDetailData: detailData => dispatch(selectImageData(detailData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);

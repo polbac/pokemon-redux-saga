@@ -1,18 +1,18 @@
-import { API_URL_WITH_KEY, DELAY } from "../config";
+import { API_LIST_URL, DELAY } from "../config";
 
 export default {
   cache: {},
   getList() {
     return new Promise((resolve, reject) => {
-      if (this.cache[API_URL_WITH_KEY]) {
-        resolve(this.cache[API_URL_WITH_KEY]);
+      if (this.cache[API_LIST_URL]) {
+        resolve(this.cache[API_LIST_URL]);
         return;
       }
-      fetch(API_URL_WITH_KEY)
+      fetch(API_LIST_URL)
         .then(req => req.json())
         .then(nasaResponse => {
-          this.cache[API_URL_WITH_KEY] = nasaResponse;
-          setTimeout(resolve(this.cache[API_URL_WITH_KEY]), DELAY);
+          this.cache[API_LIST_URL] = nasaResponse;
+          setTimeout(resolve(this.cache[API_LIST_URL]), DELAY);
         });
     });
   },
@@ -23,7 +23,7 @@ export default {
         resolve(this.cache[id]);
         return;
       }
-      fetch(API_URL_WITH_KEY)
+      fetch(API_LIST_URL)
         .then(req => req.json())
         .then(nasaResponse => {
           const detailData = nasaResponse.find(item => item.identifier === id);

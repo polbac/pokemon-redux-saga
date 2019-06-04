@@ -1,20 +1,16 @@
-import React from 'react'
-import LazyLoad from 'react-lazyload'
-import { Link } from 'react-router-dom'
-import { ItemContainer } from './ItemStyles'
-import { IMAGE_URL, API_KEY_WITH_QP} from '../../config'
+import React from "react";
+import { ItemContainer } from "./ItemStyles";
 
-export const getImage = (imageIdentifier, date, identifier) => {
-    const stringDateForImage = date.split(' ')[0]
-        .split('-').join('/')
-
-    return (
-        <img src={`${IMAGE_URL}/${stringDateForImage}/png/${imageIdentifier}.png?${API_KEY_WITH_QP}`} />
-    )
-}
-
-export const Item = ({ identifier, image, date, onSelect }) => (
-    <ItemContainer onClick={onSelect}>
-        {getImage(image, date, identifier)}
+export const Item = props => {
+  console.log("props", props);
+  return (
+    <ItemContainer onClick={props.onSelect}>
+      {props.sprites ? (
+        <img src={props.sprites.front_default} />
+      ) : (
+        <div className="blink">...</div>
+      )}
+      <p>{props.name}</p>
     </ItemContainer>
-)
+  );
+};

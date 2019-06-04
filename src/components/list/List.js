@@ -1,36 +1,46 @@
 import React from "react";
 import { connect } from "react-redux";
-import clientNasa from "../../client/nasaClient";
-import { setPreload, setList, selectImageId } from "../../ducks/images";
+import { API_LIST_URL } from "../../config";
+import { setItemDetail, setList, setPreload } from "../../ducks/images";
 import { Item } from "../item/Item";
 import Preloading from "../preloading/Preloading";
 
 class List extends React.Component {
   componentDidMount() {
-    const { showSpinner, hideSpinner, setImageList } = this.props;
+    const { showSpinner, hideSpinner, setPokemonList } = this.props;
     showSpinner();
-    clientNasa.getList().then(list => {
-      hideSpinner();
-      setImageList(list);
-    });
+    fetch(API_LIST_URL)
+      .then(res => res.json())
+      .then(list => {
+        hideSpinner();
+        setPokemonList(list.results);
+        this.loadDetails();
+      });
+  }
+
+  loadDetails() {
+    const { list, setPokemonDetail } = this.props;
+    list.map((item, index) =>
+      fetch(item.url)
+        .then(res => res.json())
+        .then(item => {
+          setPokemonDetail(index, item);
+        })
+    );
   }
 
   render() {
-    const { list, preloading, selectImageId } = this.props;
+    const { list, preloading } = this.props;
+    console.log(list);
     return (
       <section>
         <marquee>
-          <h2>DSCOVR's Earth Polychromatic Imaging Camera (EPIC)</h2>
+          <h2>YO SOY TU POKEMÓN PORQUE ATRAPASTE MI CORAZÓN</h2>
         </marquee>
 
         {preloading && <Preloading />}
 
-        {list.map(imageData => (
-          <Item
-            onSelect={() => selectImageId(imageData.identifier)}
-            {...imageData}
-          />
-        ))}
+        {list.map(item => <Item onSelect={() => item.identifier} {...item} />)}
       </section>
     );
   }
@@ -44,8 +54,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => ({
   showSpinner: () => dispatch(setPreload(true)),
   hideSpinner: () => dispatch(setPreload(false)),
-  setImageList: list => dispatch(setList(list)),
-  selectImageId: image => dispatch(selectImageId(image)),
+  setPokemonList: list => dispatch(setList(list)),
+  setPokemonDetail: (id, data) => dispatch(setItemDetail(id, data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);
