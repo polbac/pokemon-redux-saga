@@ -1,0 +1,44 @@
+html,
+body {
+  text-align: center;
+  background: black;
+  color: white;
+  background: url(/bg.gif) fixed;
+  cursor: crosshair;
+  font-family: "Press Start 2P", monospace;
+  line-height: 30px;
+}
+
+@keyframes detail-in {
+  from {
+    transform: translateY(100vh);
+    -webkit-transform: translateY(100vh);
+    -moz-transform: translateY(100vh);
+  }
+  to {
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: detail-in 1s;
+}
+
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+marquee {
+  text-shadow: 3px 3px 10px red;
+  margin-bottom: 20px;
+  color: yellow;
+  animation: blinker 1s linear infinite;
+}
