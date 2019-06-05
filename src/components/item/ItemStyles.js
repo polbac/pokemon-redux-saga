@@ -15,6 +15,9 @@ export const ItemContainer = styled.article`
   margin: 25px;
   background: rgba(0, 0, 0, 0);
   border-radius: 50%;
+  & img {
+    width: 200px;
+  }
   :hover {
     transform: scale(1.25);
     background: rgba(0, 0, 155, 1);

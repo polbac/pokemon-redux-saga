@@ -3,9 +3,9 @@ import { ItemContainer } from "./ItemStyles";
 
 export const Item = props => {
   return (
-    <ItemContainer onClick={props.onSelect}>
+    <ItemContainer  onClick={props.onSelect}>
       {props.sprites ? (
-        <img src={props.sprites.front_default} />
+        <img className='float' src={props.sprites.front_default} />
       ) : (
         <div className="blink">...</div>
       )}

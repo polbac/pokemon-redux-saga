@@ -18,7 +18,7 @@ function App() {
         <List />
         <Detail />
         <Offline />
-        <img src={Banner} />
+        <img className='banner' src={Banner} />
       </main>
     </Provider>
   );
