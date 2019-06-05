@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Preloading from "../preloading/Preloading";
-import { selectItem } from "../../ducks/images";
+import { unselectItem } from "../../ducks/images";
 import {
   DetailContainer,
   DetailInfoContainer,
@@ -10,26 +10,6 @@ import {
 } from "./DetailStyles";
 
 class Detail extends React.Component {
-  componentDidUpdate() {
-    console.log('update')
-  }
-
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.onKeyDown.bind(this));
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown");
-  }
-
-  ESC_KEY_EVENT = 27;
-  onKeyDown(event) {
-    const evt = event || window.event;
-    if (evt.keyCode === this.ESC_KEY_EVENT) {
-      this.props.close();
-    }
-  }
 
   render() {
     const { detailId, list, close } = this.props;
@@ -97,7 +77,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  close: id => dispatch(selectItem(null)),
+  close: id => dispatch(unselectItem()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);

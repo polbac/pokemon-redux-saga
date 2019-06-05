@@ -3,6 +3,7 @@ export const FETCH_LIST = "POKEMON_FETCH_LIST";
 export const SET_LIST = "POKEMON_SET_LIST";
 export const SET_ITEM_DETAIL = "POKEMON_SET_ITEM_DETAIL";
 export const SELECT_ITEM = "POKEMON_SELECT_ITEM";
+export const UNSELECT_ITEM = "POKEMON_UNSELECT_ITEM";
 export const SET_OFFLINE = "POKEMON_SET_OFFLINE";
 
 const initState = {
@@ -34,7 +35,10 @@ export function reducerImages(state = initState, action) {
         case SELECT_ITEM:
             newState.detailId = action.index;
             break;
-
+        case UNSELECT_ITEM:
+            newState.detailId = null;
+            break;
+            
         case SET_OFFLINE:
             newState.offline = action.offline;
             break;
@@ -66,6 +70,10 @@ export const setItemDetail = (id, data) => ({
 export const selectItem = (index) => ({
     type: SELECT_ITEM,
     index,
+});
+
+export const unselectItem = () => ({
+    type: UNSELECT_ITEM,
 });
 
 export const setOffline = offline => ({
