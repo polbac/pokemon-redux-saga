@@ -1,8 +1,21 @@
-import { combineReducers, createStore } from 'redux'
-import { reducerImages } from '../ducks/images'
+import { combineReducers, createStore, applyMiddleware } from "redux";
+import createSagaMiddleware from 'redux-saga'
+import { composeWithDevTools } from 'redux-devtools-extension'
+
+import { reducerImages } from "../ducks/images";
+import allSagas from '../sagas'
 
 const reducers = combineReducers({
-    images: reducerImages,
-})
+  images: reducerImages,
+});
 
-export const store = createStore(reducers)
+const sagaMiddleware = createSagaMiddleware()
+
+export const store = createStore(
+  reducers,
+  composeWithDevTools(
+    applyMiddleware(sagaMiddleware)
+  ),
+);
+
+sagaMiddleware.run(allSagas)

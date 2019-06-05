@@ -1,51 +1,40 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Item } from '../item/Item'
-import Preloading from '../preloading/Preloading'
-import { API_URL_WITH_KEY } from '../../config'
-import { setPreload, setList, selectImage } from '../../ducks/images'
+import React from "react";
+import { connect } from "react-redux";
+import { fetchList, selectItem } from "../../ducks/images";
+import { Item } from "../item/Item";
+import Preloading from "../preloading/Preloading";
 
 class List extends React.Component {
-    
-    componentDidMount() {
-        const { showSpinner, hideSpinner, setImageList } = this.props
-        showSpinner()
-        fetch(API_URL_WITH_KEY)
-            .then(req => req.json())
-            .then(list => {
-                hideSpinner()
-                setImageList(list)
-            })
-    }
+  componentDidMount() {
+    this.props.fetch()
+  }
 
-    render() {
-        const { list, preloading, selectImage } = this.props
-        return (
-            <section>
-                <marquee>
-                    <h2>DSCOVR's Earth Polychromatic Imaging Camera (EPIC)</h2>
-                </marquee>
-                
-                {preloading && <Preloading />}
+  render() {
+    const { list, preloading, selectPokemonIndex } = this.props;
 
-                {list.map(imageData => 
+    return (
+      <section>
+        <marquee>
+          <h2>YO SOY TU POKEMÓN PORQUE ATRAPASTE MI CORAZÓN</h2>
+        </marquee>
 
-                <Item onSelect={() => selectImage(imageData)} {...imageData} />)}
-            </section>
-        )
-    }
+        {preloading && <Preloading />}
+
+        {list.map((item, index) => 
+          <Item onSelect={() => selectPokemonIndex(index)} {...item} />)}
+      </section>
+    );
+  }
 }
 
-const mapStateToProps = (store) => ({
-    list: store.images.list,
-    preloading: store.images.preloading,
-})
+const mapStateToProps = store => ({
+  list: store.images.list,
+  preloading: store.images.preloading,
+});
 
-const mapDispatchToProps = (dispatch) => ({
-    showSpinner: () => dispatch(setPreload(true)),
-    hideSpinner: () => dispatch(setPreload(false)),
-    setImageList: (list) => dispatch(setList(list)),
-    selectImage: (image) => dispatch(selectImage(image)),
-})
+const mapDispatchToProps = dispatch => ({
+  fetch: () => dispatch(fetchList()),
+  selectPokemonIndex: (index) => dispatch(selectItem(index)),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps, mapDispatchToProps)(List);

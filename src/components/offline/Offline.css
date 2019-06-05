@@ -1,0 +1,9 @@
+.offline {
+  position: fixed;
+  background: rgba(0, 0, 255, 0.9);
+  height: 100vh;
+  line-height: 100vh;
+  text-align: center;
+  width: 100%;
+  top: 0;
+}
