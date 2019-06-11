@@ -1,8 +1,6 @@
 import { API_LIST_URL, DELAY } from "../config";
 
-export default {
-  cache: {},
-  getList() {
+export const getList = () => {
     return new Promise((resolve, reject) => {
       fetch(API_LIST_URL)
         .then(req => req.json())
@@ -10,8 +8,9 @@ export default {
           setTimeout(resolve(listResponse), DELAY);
         });
     });
-  },
-  getDetail(url) {
+  }
+
+  export const getDetail = (url) => {
     return new Promise((resolve, reject) => {
       fetch(url)
         .then(req => req.json())
@@ -19,5 +18,4 @@ export default {
           setTimeout(resolve(detailResponse), DELAY);
         });
     });
-  },
-};
+  }

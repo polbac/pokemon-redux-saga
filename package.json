@@ -18,8 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --env=jsdom"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +36,7 @@
     ]
   },
   "devDependencies": {
+    "jest": "^24.8.0",
     "remote-redux-devtools": "^0.5.16"
   }
 }
