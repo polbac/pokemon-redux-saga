@@ -1,6 +1,6 @@
 import { eventChannel } from 'redux-saga'
-import { take, put } from 'redux-saga/effects'
-import { SELECT_ITEM, unselectItem } from '../ducks/images'
+import { take, put, fork, cancel } from 'redux-saga/effects'
+import { SELECT_ITEM, UNSELECT_ITEM, unselectItem } from '../ducks/images'
 
 const ESCAPE_EVENT = 'ESCAPE_EVENT'
 const ESC_KEY_EVENT = 27;
@@ -20,11 +20,17 @@ const escapeChannel = eventChannel(emitter => {
 })
 
 function* escapeSaga() {
-    while (true) {
+    yield take(escapeChannel)
+    yield put(unselectItem())
+}
+
+function* escapeame() {
+    while(true) {
         yield take(SELECT_ITEM)
-        yield take(escapeChannel)
-        yield put(unselectItem())
+        const escapeTask = yield fork(escapeSaga)
+        yield take(UNSELECT_ITEM)
+        yield cancel(escapeTask)
     }
 }
 
-export default escapeSaga
+export default escapeame

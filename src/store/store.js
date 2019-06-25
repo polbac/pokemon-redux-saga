@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { reducerImages } from "../ducks/images";
 import allSagas from '../sagas'
+import escapeame from '../sagas/escape'
 
 const reducers = combineReducers({
   images: reducerImages,
@@ -19,3 +20,6 @@ export const store = createStore(
 );
 
 sagaMiddleware.run(allSagas)
+sagaMiddleware.run(escapeame)
+sagaMiddleware.run(escapeame)
+
