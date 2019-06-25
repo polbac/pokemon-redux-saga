@@ -8,7 +8,6 @@ const ESC_KEY_EVENT = 27;
 const escapeChannel = eventChannel(emitter => {
     document.addEventListener('keydown', (event) => {
         const evt = event || window.event;
-        console.log('keydown')
         if (evt.keyCode === ESC_KEY_EVENT) {
             emitter({ type: ESCAPE_EVENT })
         }
@@ -24,7 +23,7 @@ function* escapeSaga() {
     yield put(unselectItem())
 }
 
-function* escapeame() {
+function* escapeWatcher() {
     while(true) {
         yield take(SELECT_ITEM)
         const escapeTask = yield fork(escapeSaga)
@@ -33,4 +32,4 @@ function* escapeame() {
     }
 }
 
-export default escapeame
+export default escapeWatcher
