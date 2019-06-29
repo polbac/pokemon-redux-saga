@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "pokemon-redux",
+    "name": "pokemon-redux-saga",
     "builds": [
         { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" } }
     ],
