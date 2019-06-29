@@ -36,7 +36,6 @@
     ]
   },
   "devDependencies": {
-    "jest": "^24.8.0",
     "remote-redux-devtools": "^0.5.16"
   }
 }
